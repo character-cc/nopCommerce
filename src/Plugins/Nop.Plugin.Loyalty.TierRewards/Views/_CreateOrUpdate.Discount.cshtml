@@ -1,0 +1,62 @@
+﻿@model LoyaltyLevelModel
+
+@if (Model.Id > 0)
+{
+    <div class="card-body">
+        @await Html.PartialAsync("Table", new DataTablesModel
+{
+    Name = "discounts-grid",
+    UrlRead = new DataUrl("DiscountList", "Loyalty", new RouteValueDictionary { [nameof(Model.LoyaltyDiscountSearchModel.LoyaltyLevelId)] = Model.Id }),
+    UrlDelete = new DataUrl("RemoveDiscount", "Loyalty", null),
+    Length = Model.LoyaltyDiscountSearchModel.PageSize,
+    LengthMenu = Model.LoyaltyDiscountSearchModel.AvailablePageSizes,
+    ColumnCollection = new List<ColumnProperty>
+    {
+    new ColumnProperty(nameof(LoyaltyDiscountModel.Name))
+    {
+    Title = T("Admin.Promotions.Discounts.Fields.Name").Text
+    },
+    new ColumnProperty(nameof(LoyaltyDiscountModel.AdminComment))
+    {
+    Title = T("Admin.Promotions.Discounts.Fields.AdminComment").Text
+    },
+    // new ColumnProperty(nameof(LoyaltyDiscountModel.Id))
+    // {
+    // Title = T("Admin.Common.Delete").Text,
+    // Width = "100",
+    // Render = new RenderButtonRemove(T("Admin.Common.Delete").Text),
+    // ClassName = NopColumnClassDefaults.Button
+    // }
+    }
+})
+    </div>
+
+    <div class="card-footer">
+        <button type="submit" id="btnAddNewDiscount"
+                onclick="javascript:OpenWindow('@(Url.Action("AddDiscountPopup", "Loyalty", new { loyaltyLevelId = Model.Id, btnId = "btnRefreshDiscounts", formId = "loyaltylevel-form" }))', 800, 600, true); return false;"
+                class="btn btn-primary">
+            @T("Plugins.Customer.Loyalty.LoyaltyLevelToDicount.AddNew")
+        </button>
+        <button type="submit" id="btnDeleteDiscount"
+                onclick="javascript:OpenWindow('@(Url.Action("DeleteDiscountPopup", "Loyalty", new { loyaltyLevelId = Model.Id, btnId = "btnRefreshDiscounts", formId = "loyaltylevel-form" }))', 800, 600, true); return false;"
+                class="btn btn-primary">
+            @T("Plugins.Customer.Loyalty.LoyaltyLevelToDicount.Delete")
+        </button>
+
+        <button type="submit" id="btnRefreshDiscounts" style="display: none"></button>
+        <script>
+            $(function () {
+                $('#btnRefreshDiscounts').click(function () {
+                    updateTable('#discounts-grid');
+                    return false;
+                });
+            });
+        </script>
+    </div>
+}
+else
+{
+    <div class="card-body">
+        @T("Plugins.Customer.Loyalty.LoyaltyLevel.SaveBeforeEdit")
+    </div>
+}

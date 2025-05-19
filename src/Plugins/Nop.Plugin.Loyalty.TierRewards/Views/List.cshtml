@@ -1,0 +1,116 @@
+﻿@model LoyaltyLevelSearchModel
+
+@{
+    ViewBag.PageTitle = T("Plugins.Customer.Loyalty.Levels").Text;
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Plugins.Customer.Loyalty.Levels")
+    </h1>
+    <div class="float-right">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-square-plus"></i>
+            @T("Admin.Common.AddNew")
+        </a>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <!-- Search card -->
+                <div class="card card-default card-search">
+                    <div class="card-body">
+                        <div class="row search-row opened" data-hideAttribute="">
+                            <div class="search-text">@T("Admin.Common.Search")</div>
+                            <div class="icon-search"><i class="fas fa-magnifying-glass"></i></div>
+                        </div>
+
+                        <div class="search-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="SearchFriendlyName" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="SearchFriendlyName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="SearchSystemName" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="SearchSystemName" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="text-center col-12">
+                                    <button type="button" id="search-levels" class="btn btn-primary btn-search">
+                                        <i class="fas fa-magnifying-glass"></i>
+                                        @T("Admin.Common.Search")
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data table card -->
+                <div class="card card-default">
+                    <div class="card-body">
+                        @await Html.PartialAsync("Table", new DataTablesModel
+                   {
+                       Name = "loyaltylevels-grid",
+                       UrlRead = new DataUrl("List", "Loyalty", null),
+                       SearchButtonId = "search-levels",
+                       Length = Model.PageSize,
+                       LengthMenu = Model.AvailablePageSizes,
+                       Filters = new List<FilterParameter>
+                        {
+                        new FilterParameter(nameof(Model.SearchFriendlyName)),
+                        new FilterParameter(nameof(Model.SearchSystemName))
+                        },
+                       ColumnCollection = new List<ColumnProperty>
+                        {
+                        new ColumnProperty(nameof(LoyaltyLevelModel.FriendlyName))
+                        {
+                        Title = T("Plugins.Customer.Loyalty.LoyaltyLevel.FriendlyName").Text,
+                        Width = "200"
+                        },
+                        new ColumnProperty(nameof(LoyaltyLevelModel.SystemName))
+                        {
+                        Title = T("Plugins.Customer.Loyalty.LoyaltyLevel.SystemName").Text,
+                        Width = "200"
+                        },
+                        new ColumnProperty(nameof(LoyaltyLevelModel.MinimumSpentAmount))
+                        {
+                        Title = T("Plugins.Customer.Loyalty.LoyaltyLevel.MinimumSpentAmount").Text,
+                        Width = "150"
+                        },
+                        new ColumnProperty(nameof(LoyaltyLevelModel.MinimumProductQuantity))
+                        {
+                        Title = T("Plugins.Customer.Loyalty.LoyaltyLevel.MinimumProductQuantity").Text,
+                        Width = "150"
+                        },
+                        new ColumnProperty(nameof(LoyaltyLevelModel.Id))
+                        {
+                        Title = T("Admin.Common.Edit").Text,
+                        Width = "100",
+                        ClassName = NopColumnClassDefaults.Button,
+                        Render = new RenderButtonEdit(new DataUrl("~/Admin/Loyalty/Edit"))
+                        }
+                        }
+                   })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,29 @@
+﻿@model LoyaltyLevelModel
+
+@* <div asp-validation-summary="All" class="message-error"></div> *@
+<input asp-for="Id" type="hidden" />
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <nop-cards id="loyaltylevel-cards">
+                <nop-card asp-name="loyaltylevel-info"
+                          asp-icon="fas fa-info"
+                          asp-title="Loyalty Level Info"
+                          asp-hide-block-attribute-name=""
+                          asp-hide="false"
+                          asp-advanced="false">
+                    @await Html.PartialAsync("~/Plugins/Customer.Loyalty/Views/_CreateOrUpdate.Info.cshtml", Model)
+                </nop-card>
+                <nop-card asp-name="loyaltylevel-discount"
+                          asp-icon="fas fa-discount"
+                          asp-title="Loyalty Level Discount"
+                          asp-hide-block-attribute-name=""
+                          asp-hide="false"
+                          asp-advanced="false">
+                    @await Html.PartialAsync("~/Plugins/Customer.Loyalty/Views/_CreateOrUpdate.Discount.cshtml", Model)
+                </nop-card>
+            </nop-cards>
+        </div>
+    </div>
+</section>

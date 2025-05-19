@@ -1,6 +1,15 @@
 ﻿﻿nopCommerce: free and open-source eCommerce solution
 ===========
-Add
+
+### Plugin Nop.Plugin.Customer.Loyalty
+
+This plugin lets store admins group customers into different levels based on how much they spend and how many products they buy. 
+You can assign discount codes to each level, and also choose whether customers in higher levels can use discounts from lower levels.
+For example, a discount for Silver members can also be used by Diamond members if allowed.
+
+![Loyalty List](images/loyaltyList.png)
+![Edit Loyalty](images/editLoyalty.png)
+![Add Discount](images/addDiscount.png)
 
 [nopCommerce](https://www.nopcommerce.com/?utm_source=github&utm_medium=content&utm_campaign=homepage) is the best open-source eCommerce platform. nopCommerce is free, and it is the most popular ASP.NET Core shopping cart.
 

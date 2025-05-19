@@ -1,0 +1,111 @@
+﻿@model AddOrDeleteDiscountToLoyaltyLevelSearchModel
+
+@{
+    Layout = "_AdminPopupLayout";
+    ViewBag.PageTitle = T("Plugins.Customer.Loyalty.Level.Discounts.AddNew").Text;
+}
+
+@if (ViewBag.RefreshPage == true)
+{
+    <script>
+        try {
+            window.opener.document.forms['@(Context.Request.Query["formId"])'].@(Context.Request.Query["btnId"]).click();
+        } catch (e) {}
+        window.close();
+    </script>
+}
+else
+{
+    <form asp-controller="Loyalty" asp-action="AddDiscountPopup"
+          asp-route-loyaltyLevelId="@Context.Request.Query["loyaltyLevelId"]"
+          asp-route-btnId="@Context.Request.Query["btnId"]"
+          asp-route-formId="@Context.Request.Query["formId"]">
+        <div class="content-header clearfix">
+            <h1 class="float-left">
+                @T("Plugins.Customer.Loyalty.LoyaltyLevelToDicount.AddNew")
+            </h1>
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="form-horizontal">
+                    <div class="cards-group">
+                        <div class="card card-default card-search card-popup">
+                            <div class="card-body">
+                                <div class="row">
+                                    <input type="hidden" asp-for="LoyaltyLevelId" />
+                                    <div class="col-sm-6">
+                                        <div class="form-group row">
+                                            <div class="col-sm-5">
+                                                <nop-label asp-for="SearchName" />
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <nop-editor asp-for="SearchName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button type="button" id="search-discounts" class="btn btn-primary btn-search">
+                                            <i class="fas fa-magnifying-glass"></i>
+                                            @T("Admin.Common.Search")
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-default">
+                            <div class="card-body">
+                                @await Html.PartialAsync("Table", new DataTablesModel
+                       {
+                           Name = "discounts-grid",
+                           UrlRead = new DataUrl("AddDicountPopupList", "Loyalty", null),
+                           SearchButtonId = "search-discounts",
+                           Length = Model.PageSize,
+                           LengthMenu = Model.AvailablePageSizes,
+                           Filters = new List<FilterParameter>
+                            {
+                            new FilterParameter(nameof(Model.SearchName)),
+                            new FilterParameter(nameof(Model.LoyaltyLevelId))                                    },
+                           ColumnCollection = new List<ColumnProperty>
+                            {
+                            new ColumnProperty(nameof(LoyaltyDiscountModel.Id))
+                            {
+                            IsMasterCheckBox = true,
+                            Render = new RenderCheckBox(nameof(AddOrDeleteDiscountToLoyaltyLevelModel.SelectedDiscountIds)),
+                            ClassName = NopColumnClassDefaults.CenterAll,
+                            Width = "50"
+                            },
+                            new ColumnProperty(nameof(LoyaltyDiscountModel.Name))
+                            {
+                            Title = T("Admin.Promotions.Discounts.Fields.Name").Text
+                            },
+                            new ColumnProperty(nameof(LoyaltyDiscountModel.AdminComment))
+                            {
+                            Title = T("Admin.Promotions.Discounts.Fields.AdminComment").Text,
+                            Width = "200"
+                            },
+                            new ColumnProperty(nameof(LoyaltyDiscountModel.Id))
+                            {
+                            Title = T("Plugins.Customer.Loyalty.LoyaltyLevelToDicount.EnableInheritId").Text,
+                            Render = new RenderCheckBox(nameof(AddOrDeleteDiscountToLoyaltyLevelModel.EnableInheritIds)),
+                            ClassName = NopColumnClassDefaults.CenterAll,
+                            Width = "50"
+                            },
+                            }
+                       })
+                            </div>                            <div class="card-footer">
+                                <button type="submit" name="save" class="btn btn-primary">
+                                    <i class="far fa-floppy-disk"></i>
+                                    @T("Admin.Common.Save")
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </form>
+}

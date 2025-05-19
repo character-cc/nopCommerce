@@ -1,0 +1,69 @@
+﻿@model LoyaltyLevelModel
+
+
+<div asp-validation-summary="ModelOnly" class="message-error"></div>
+<input asp-for="Id" type="hidden" />
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default">
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FriendlyName" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="FriendlyName" asp-required="true" />
+                                <span asp-validation-for="FriendlyName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <nop-label asp-for="SystemName" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="SystemName" asp-required="true" />
+                                <span asp-validation-for="SystemName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <nop-label asp-for="MinimumSpentAmount" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="MinimumSpentAmount" asp-required="true" />
+                                <span asp-validation-for="MinimumSpentAmount" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <nop-label asp-for="MinimumProductQuantity" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="MinimumProductQuantity" asp-required="true" />
+                                <span asp-validation-for="MinimumProductQuantity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                     
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

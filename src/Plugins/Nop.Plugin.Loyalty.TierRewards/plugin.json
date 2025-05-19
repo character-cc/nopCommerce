@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Loyalty",
+  "FriendlyName": "Loyalty",
+  "SystemName": "Customer.Loyalty",
+  "Version": "4.80.0",
+  "SupportedVersions": [ "4.80" ],
+  "Author": "Cuong",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Customer.Loyalty.dll",
+  "Description": "Enables customer levels and exclusive benefits based on activities and purchases."
+}
